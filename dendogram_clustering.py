@@ -2,34 +2,33 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
 
-# Función para crear dendrogramas
-def create_dendrogram(data, level, fertility_status, status_label):
-    # Filtrar datos basados en el estado de fertilidad y eliminar la segunda columna
-    filtered_data = data[data.iloc[:, 0] == fertility_status].iloc[:, 2:]
-    print(filtered_data)
-    # Clustering jerárquico
-    linked = linkage(filtered_data.T, method='ward')  # Transponer datos para agrupar por taxonomia
+# Load the dataset
+file_path = 'data/datasets/microbiota_trustable.xlsx'  # Adjust the file path as needed
+sheet_names = ['Pylum-level microbiota', 'Family-level microbiota', 'Genus-level microbiota']
 
-    # Dendrograma
-    plt.figure(figsize=(15, 10))
-    dendrogram(linked, orientation='top', labels=filtered_data.columns, distance_sort='descending', show_leaf_counts=True)
-    plt.title(f'Dendrograma de clustering nivel de {level} - {status_label}')
-    plt.xlabel('Tipo de ' + level)
-    plt.ylabel('Distancia de Ward (log)')
+# Process each sheet
+for sheet in sheet_names:
+    # Load the data
+    df = pd.read_excel(file_path, sheet_name=sheet)
+
+    # Extract the fertility status as labels
+    fertility_labels = df.iloc[:, 0].astype(str)
+
+    # Drop the first two columns to focus only on microbiota data
+    microbiota_data = df.drop(columns=[df.columns[0], df.columns[1]])
+
+    # Perform hierarchical clustering using only the numerical data
+    Z = linkage(microbiota_data, 'ward')
+
+    # Plot the dendrogram
+    plt.figure(figsize=(10, 7))
+    plt.title(f'Dendrogram for {sheet}')
+    dendrogram(Z, labels=fertility_labels.tolist(), leaf_rotation=90, leaf_font_size=10)
     plt.yscale('log')
-    plt.ylim(0.0001,1000)
-    plt.xticks(rotation=90)
-    plt.savefig(f'data/outputs/graphs/dendograms/dendrograma_{level}_{status_label}.png')
-    plt.close()
+    plt.ylim(0.5, 500)
+    plt.xlabel('Subjects (Fertility Status)')
+    plt.ylabel('Distance')
 
-# Cargar el dataset
-file_path = 'data/datasets/microbiota_trustable.xlsx'
-sheets = ['Pylum-level microbiota', 'Family-level microbiota', 'Genus-level microbiota']
-
-for sheet in sheets:
-    level = sheet.split('-')[0]  # Extraer el nivel (Pylum, Family, Genus)
-    data = pd.read_excel(file_path, sheet_name=sheet)
-
-    # Crear dendrogramas para muestras fértiles e infértiles
-    create_dendrogram(data, level, 1, 'Fertile')
-    create_dendrogram(data, level, 0, 'Infertile')
+    # Save the plot to a file
+    plt.savefig(f'data/outputs/graphs/dendrograms/{sheet.replace(" ", "-")}.png')
+    plt.close()  # Close the plot to avoid overlapping of plots
