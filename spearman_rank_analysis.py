@@ -4,7 +4,7 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 
 # Load the dataset and prepare to analyze other sheets
-file_path = 'data/microbiota_trustable.xlsx'
+file_path = 'data/datasets/microbiota_trustable.xlsx'
 sheets = ['Pylum-level microbiota', 'Family-level microbiota', 'Genus-level microbiota']
 top_correlations_fertile = {"Pylum": [], "Family": [], "Genus": []}
 top_correlations_infertile = {"Pylum": [], "Family": [], "Genus": []}
@@ -81,7 +81,7 @@ fertile_df = rearrange_data_for_excel(top_correlations_fertile)
 infertile_df = rearrange_data_for_excel(top_correlations_infertile)
 
 # Save the DataFrames to Excel files with formatting
-save_excel_with_format(fertile_df, 'data/fertile_correlations.xlsx')
-save_excel_with_format(infertile_df, 'data/infertile_correlations.xlsx')
+save_excel_with_format(fertile_df, 'data/outputs/fertile_correlations.xlsx')
+save_excel_with_format(infertile_df, 'data/outputs/infertile_correlations.xlsx')
 
 
