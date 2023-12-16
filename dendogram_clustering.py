@@ -6,9 +6,9 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 def create_dendrogram(data, level, fertility_status, status_label):
     # Filtrar datos basados en el estado de fertilidad y eliminar la segunda columna
     filtered_data = data[data.iloc[:, 0] == fertility_status].iloc[:, 2:]
-
+    print(filtered_data)
     # Clustering jerárquico
-    linked = linkage(filtered_data.T, method='ward')  # Transponer datos para agrupar pylum
+    linked = linkage(filtered_data.T, method='ward')  # Transponer datos para agrupar por taxonomia
 
     # Dendrograma
     plt.figure(figsize=(15, 10))
