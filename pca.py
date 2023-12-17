@@ -5,7 +5,7 @@ from sklearn.metrics import balanced_accuracy_score, accuracy_score
 import matplotlib.pyplot as plt
 
 # Load Data
-excel_file_path = 'data/microbiota_trustable.xlsx'
+excel_file_path = 'data/datasets/microbiota_trustable.xlsx'
 sheet2_df = pd.read_excel(excel_file_path, sheet_name='Pylum-level microbiota')
 sheet3_df = pd.read_excel(excel_file_path, sheet_name='Family-level microbiota')
 sheet4_df = pd.read_excel(excel_file_path, sheet_name='Genus-level microbiota')
