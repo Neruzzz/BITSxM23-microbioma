@@ -1,5 +1,3 @@
-# Microbioma seminal: reporte de resultados
-
 ## Dendrogramas
 
 El análisis de dendrogramas en el contexto de la fertilidad o infertilidad de los sujetos, basado en la composición de microbiotas en sus muestras, ofrece información crucial sobre cómo los perfiles microbiológicos se relacionan con estos estados de fertilidad. A continuación se presenta una guía para interpretar estos dendrogramas:
